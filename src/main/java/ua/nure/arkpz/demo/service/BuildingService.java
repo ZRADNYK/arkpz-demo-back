@@ -13,6 +13,7 @@ import ua.nure.arkpz.demo.model.User;
 import ua.nure.arkpz.demo.validator.OvalValidatorImpl;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class BuildingService {
@@ -77,7 +78,11 @@ public class BuildingService {
         return buildingDao.findById(buildingId).orElseThrow(EntitySearchFailedException::new);
     }
 
-    public Building findByOwner(User user) {
+    public Set<Building> findByOwner(User user) {
         return buildingDao.findByOwner(user);
     }
+
+    /*public Set<Building> findAllBuildingsByUser(User user) {
+        return byu
+    }*/
 }
