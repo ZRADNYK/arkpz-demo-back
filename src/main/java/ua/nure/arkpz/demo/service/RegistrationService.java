@@ -37,7 +37,7 @@ public class RegistrationService {
                 .isCredentialsNonExpired(true)
                 .isEnabled(true)
                 .build();
-        validator.validate(user);
+            validator.validate(user);
         userDao.save(user);
         return user;
     }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.nure.arkpz.demo.model.User;
 import ua.nure.arkpz.demo.service.UserService;
 
-@RestController("/users")
+@RestController
 public class UserController {
     private final UserService userService;
 

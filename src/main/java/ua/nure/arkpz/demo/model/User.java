@@ -14,6 +14,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -68,7 +69,7 @@ public class User implements UserDetails {
     private LocalDateTime tokenExpirationDate;
 
     @Column(name = "birth_date")
-    @NotNull
+   // @NotNull
     @JsonFormat(pattern = "MM/dd/yyyy")
     private LocalDate birthDate;
 
@@ -227,5 +228,20 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userId.equals(user.userId) &&
+                email.equals(user.email) &&
+                password.equals(user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, email, password);
     }
 }
