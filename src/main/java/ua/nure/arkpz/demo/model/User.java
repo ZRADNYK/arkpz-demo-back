@@ -236,8 +236,7 @@ public class User implements UserDetails {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return userId.equals(user.userId) &&
-                email.equals(user.email) &&
-                password.equals(user.password);
+                email.equals(user.email);
     }
 
     @Override

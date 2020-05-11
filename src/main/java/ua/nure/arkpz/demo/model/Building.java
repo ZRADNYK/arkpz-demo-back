@@ -3,6 +3,7 @@ package ua.nure.arkpz.demo.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -52,5 +53,19 @@ public class Building {
         Set<Worker> workers = this.getWorkers();
         workers.remove(worker);
         return workers;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Building building = (Building) o;
+        return buildingId.equals(building.buildingId) &&
+                owner.equals(building.owner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(buildingId, owner);
     }
 }

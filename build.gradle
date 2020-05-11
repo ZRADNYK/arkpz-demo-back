@@ -55,6 +55,11 @@ dependencies {
     compile group: 'net.sf.oval', name: 'oval', version: '1.90'
 
 
+    // Commons
+    compile group: 'org.apache.commons', name: 'commons-io', version: '1.3.2'
+
+
+
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }

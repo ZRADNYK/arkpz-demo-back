@@ -74,6 +74,6 @@ public class BuildingController {
         if(user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        else return new ResponseEntity<>(buildingService.findByOwner(user), HttpStatus.OK);
+        else return new ResponseEntity(buildingService.findByOwner(user), HttpStatus.OK);
     }
 }

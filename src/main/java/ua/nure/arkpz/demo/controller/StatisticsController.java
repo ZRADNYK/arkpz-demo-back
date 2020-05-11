@@ -1,12 +1,12 @@
 package ua.nure.arkpz.demo.controller;
 
+import org.apache.commons.io.IOUtils;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.nure.arkpz.demo.model.Building;
 import ua.nure.arkpz.demo.model.User;
 import ua.nure.arkpz.demo.service.BuildingService;
@@ -14,6 +14,10 @@ import ua.nure.arkpz.demo.service.RecommendationsService;
 import ua.nure.arkpz.demo.service.StatisticsService;
 import ua.nure.arkpz.demo.service.UserService;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Date;
 
 @RestController
@@ -56,5 +60,25 @@ public class StatisticsController {
         }
         recommendationsService.prepareRecommendationsForBuilding(building);
         return new ResponseEntity(statisticsService.getStatisticsByDate(building, date), HttpStatus.OK);
+    }
+
+    @PatchMapping("/statistics/period/chart")
+    public Object getChartByPeriod(@AuthenticationPrincipal User currentUser,
+                                   @RequestBody User user, @RequestParam Long buildingId,
+                                   @RequestParam Date from, @RequestParam Date to,
+                                   HttpServletRequest request) throws IOException {
+        Building building = buildingService.findById(buildingId);
+        if (!currentUser.equals(user)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        if (!building.equals(buildingService.findByOwner(user).get(0))) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        InputStream in = request.getServletContext().getResourceAsStream("/WEB-INF/images/chart.png");
+        byte[] media = IOUtils.toByteArray(in);
+        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+
+        return new ResponseEntity<>(media, headers, HttpStatus.OK);
     }
 }
