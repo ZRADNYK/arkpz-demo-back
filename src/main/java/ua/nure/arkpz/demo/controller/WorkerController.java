@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.nure.arkpz.demo.model.Building;
 import ua.nure.arkpz.demo.model.Worker;
@@ -24,15 +23,15 @@ public class WorkerController {
     }
 
     @PostMapping("/enter")
-    public ResponseEntity<Worker> newWorkerEntered(@RequestBody Worker worker, @RequestParam Long buildingId) {
-        Building building = buildingService.findById(buildingId);
+    public ResponseEntity<Worker> newWorkerEntered(@RequestBody Worker worker) {
+        Building building = buildingService.findById(worker.getCurrentBuilding().getBuildingId());
         workerService.workerEnteredBuilding(worker, building);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/left")
-    public ResponseEntity<Worker> workerLeftBuilding(@RequestBody Worker worker, @RequestParam Long buildingId) {
-        Building building = buildingService.findById(buildingId);
+    public ResponseEntity<Worker> workerLeftBuilding(@RequestBody Worker worker) {
+        Building building = buildingService.findById(worker.getCurrentBuilding().getBuildingId());
         workerService.workerLeftBuilding(worker, building);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -16,7 +16,7 @@ public class CustomerService {
     private final CustomerDao customerDao;
     private final BuildingDao buildingDao;
     private final OvalValidatorImpl validator;
-    private HistoryService historyService;
+    private final HistoryService historyService;
 
     @Autowired
     public CustomerService(CustomerDao customerDao, BuildingDao buildingDao, OvalValidatorImpl validator, HistoryService historyService) {
@@ -47,17 +47,12 @@ public class CustomerService {
         return customer;
     }
 
-    private Boolean findIsCustomerSicking(Double temperature) {
-        return temperature > 38.0;
-    }
-
     public Customer customerLeftBuilding(Building building, Customer customer) {
         ArrayList<Customer> potentialCustomers = customerDao.findByCurrentBuildingAndTemperatureBetween(
                 building , customer.getTemperature() - 0.2,
                 customer.getTemperature() + 3.0);
 
         Customer customerToLeave = findClosestTemperature(customer.getTemperature(), potentialCustomers);
-
         customerToLeave.setOutTime(new Time(System.currentTimeMillis()));
 
         building.deleteCustomer(customer);
@@ -72,6 +67,10 @@ public class CustomerService {
                 building.getWorkers().size());
 
         return customerToLeave;
+    }
+
+    private Boolean findIsCustomerSicking(Double temperature) {
+        return temperature > 38.0;
     }
 
     private Customer findClosestTemperature(Double temperature, ArrayList<Customer> potentialCustomers) {

@@ -24,15 +24,15 @@ public class CustomerController {
     }
 
     @PostMapping("/customers/enter")
-    public ResponseEntity<Customer> newCustomerEntered(@RequestBody Customer customer, @RequestParam Long buildingId) {
-        Building building = buildingService.findById(buildingId);
+    public ResponseEntity<Customer> newCustomerEntered(@RequestBody Customer customer) {
+        Building building = buildingService.findById(customer.getCurrentBuilding().getBuildingId());
         customerService.customerEnteredBuilding(building, customer);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/customers/left")
-    public ResponseEntity<Customer> customerLeftBuilding(@RequestBody Customer customer, @RequestParam Long buildingId) {
-        Building building = buildingService.findById(buildingId);
+    public ResponseEntity<Customer> customerLeftBuilding(@RequestBody Customer customer) {
+        Building building = buildingService.findById(customer.getCurrentBuilding().getBuildingId());
         customerService.customerLeftBuilding(building, customer);
         return new ResponseEntity<>(HttpStatus.OK);
     }
