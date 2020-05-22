@@ -63,17 +63,21 @@ public class StatisticsController {
     }
 
     @PatchMapping("/statistics/period/chart")
-    public Object getChartByPeriod(@AuthenticationPrincipal User currentUser,
+    // TODO rework
+    public Object getChartAsImageByPeriod(@AuthenticationPrincipal User currentUser,
                                    @RequestBody User user, @RequestParam Long buildingId,
                                    @RequestParam Date from, @RequestParam Date to,
                                    HttpServletRequest request) throws IOException {
         Building building = buildingService.findById(buildingId);
-        if (!currentUser.equals(user)) {
+        if (!currentUser.getEmail().equals(user.getEmail())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+
+/*
         if (!building.equals(buildingService.findByOwner(user).get(0))) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+*/
         HttpHeaders headers = new HttpHeaders();
         InputStream in = request.getServletContext().getResourceAsStream("/WEB-INF/images/chart.png");
         byte[] media = IOUtils.toByteArray(in);

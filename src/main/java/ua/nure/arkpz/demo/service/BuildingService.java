@@ -76,7 +76,7 @@ public class BuildingService {
     }
 
     public Building findById(Long buildingId) {
-        return buildingDao.findById(buildingId).orElseThrow(EntitySearchFailedException::new);
+        return buildingDao.findById(buildingId).orElse(new Building());
     }
 
     public ArrayList<Building> findByOwner(User user) {

@@ -11,7 +11,7 @@ import ua.nure.arkpz.demo.model.User;
 import ua.nure.arkpz.demo.role.Role;
 import ua.nure.arkpz.demo.service.UserService;
 
-@RestController("/permissions")
+@RestController
 public class PermissionController {
     private final UserService userService;
 
@@ -20,7 +20,20 @@ public class PermissionController {
         this.userService = userService;
     }
 
-    @Secured("ROLE_SUPERADMIN")
+    @PatchMapping("/permissions/{userId}/makeSuperadmin")
+    public ResponseEntity<User> makeUserSuperadmin(@PathVariable Long userId) {
+        User existingUser = userService.findByUserId(userId);
+        if(existingUser == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if(existingUser.getRoles().contains(Role.ADMIN)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        existingUser = userService.makeUserSuperadmin(existingUser);
+        return new ResponseEntity<>(existingUser, HttpStatus.OK);
+    }
+
+   // @Secured("ROLE_SUPERADMIN")
     @PatchMapping("/{userId}/makeAdmin")
     public ResponseEntity<User> makeUserAdmin(@PathVariable Long userId) {
         User existingUser = userService.findByUserId(userId);
@@ -34,7 +47,7 @@ public class PermissionController {
         return new ResponseEntity<>(existingUser, HttpStatus.OK);
     }
 
-    @Secured("ROLE_SUPERADMIN")
+ //   @Secured("ROLE_SUPERADMIN")
     @PatchMapping("/{userId}/makeUser")
     public ResponseEntity<User> makeAdminUser(@PathVariable Long userId) {
         User existingUser = userService.findByUserId(userId);

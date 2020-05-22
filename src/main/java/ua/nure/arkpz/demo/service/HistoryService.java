@@ -3,14 +3,14 @@ package ua.nure.arkpz.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ua.nure.arkpz.demo.dao.CustomerDao;
 import ua.nure.arkpz.demo.dao.HistoryDao;
-import ua.nure.arkpz.demo.dao.WorkerDao;
 import ua.nure.arkpz.demo.model.Building;
 import ua.nure.arkpz.demo.model.Customer;
 import ua.nure.arkpz.demo.model.History;
 import ua.nure.arkpz.demo.model.Worker;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 @Service
@@ -37,7 +37,7 @@ public class HistoryService {
     private int getSickingCustomers(Building building) {
         int sicking = 0;
         for (Customer customer : building.getCustomers()) {
-            if(customer.getTemperature() >= UPPER_TEMPERATURE_BOUND) {
+            if (customer.getTemperature() >= UPPER_TEMPERATURE_BOUND) {
                 sicking++;
             }
         }
@@ -47,10 +47,22 @@ public class HistoryService {
     private int getSickingWorkers(Building building) {
         int sicking = 0;
         for (Worker worker : building.getWorkers()) {
-            if(worker.getTemperature() >= UPPER_TEMPERATURE_BOUND) {
+            if (worker.getTemperature() >= UPPER_TEMPERATURE_BOUND) {
                 sicking++;
             }
         }
         return sicking;
+    }
+
+    public ArrayList<History> findAllHistoriesForBuilding(Building building) {
+        return historyDao.findByBuilding(building);
+    }
+
+    public ArrayList<History> findAllHistoriesForBuildingByDate(Building building, Date date) {
+        return historyDao.findByBuildingAndMeasuringDate(building, date);
+    }
+
+    public ArrayList<History> findAllHistoriesForBuildingByPeriod(Building building, Date from, Date to) {
+        return historyDao.findByBuildingAndMeasuringDateBetween(building, from, to);
     }
 }

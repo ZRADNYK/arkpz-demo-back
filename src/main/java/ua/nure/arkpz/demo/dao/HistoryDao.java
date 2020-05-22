@@ -6,12 +6,13 @@ import ua.nure.arkpz.demo.model.Building;
 import ua.nure.arkpz.demo.model.History;
 
 import java.sql.Date;
-import java.util.Set;
+import java.util.ArrayList;
 
 @Repository
 public interface HistoryDao extends JpaRepository<History, Long> {
-    Set<History> findByBuildingAndMeasuringDate(Building building, Date measuringDate);
-    Set<History> findByBuildingAndMeasuringDateBetween(Building building, Date measuringDateFrom, Date measuringDateTo);
+    ArrayList<History> findByBuildingAndMeasuringDate(Building building, Date measuringDate);
 
-    Set<History> findByMeasuringDate(Date date);
+    ArrayList<History> findByBuildingAndMeasuringDateBetween(Building building, Date measuringDateFrom, Date measuringDateTo);
+
+    ArrayList<History> findByBuilding(Building building);
 }

@@ -46,6 +46,14 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    public User makeUserSuperadmin(User user) {
+        Set<Role> roles = user.getRoles();
+        roles.add(Role.SUPERADMIN);
+        user.setRoles(roles);
+        userDao.save(user);
+        return user;
+    }
+
     @Override
     public User loadUserByUsername(String email) throws UsernameNotFoundException {
         return userDao.findByEmail(email).orElse(new User());
@@ -59,4 +67,6 @@ public class UserService implements UserDetailsService {
     public User findByEmail(String email) {
         return userDao.findByEmail(email).orElse(new User());
     }
+
+
 }
