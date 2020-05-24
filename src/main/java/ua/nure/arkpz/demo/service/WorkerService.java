@@ -19,7 +19,7 @@ public class WorkerService {
     private final HistoryService historyService;
 
     @Value("${upper-temperature-bound}")
-    private static double UPPER_TEMPERATURE_BOUND;
+    private double UPPER_TEMPERATURE_BOUND;
 
     @Autowired
     public WorkerService(WorkerDao workerDao, OvalValidatorImpl validator, HistoryService historyService) {

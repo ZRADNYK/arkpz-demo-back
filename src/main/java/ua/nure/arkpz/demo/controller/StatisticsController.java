@@ -1,10 +1,7 @@
 package ua.nure.arkpz.demo.controller;
 
 import org.apache.commons.io.IOUtils;
-import org.springframework.http.CacheControl;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ua.nure.arkpz.demo.model.Building;
@@ -14,7 +11,6 @@ import ua.nure.arkpz.demo.service.RecommendationsService;
 import ua.nure.arkpz.demo.service.StatisticsService;
 import ua.nure.arkpz.demo.service.UserService;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,12 +58,13 @@ public class StatisticsController {
         return new ResponseEntity(statisticsService.getStatisticsByDate(building, date), HttpStatus.OK);
     }
 
-    @PatchMapping("/statistics/period/chart")
+    @PatchMapping(value = "/statistics/period/chart",
+            produces = MediaType.IMAGE_JPEG_VALUE)
     // TODO rework
-    public Object getChartAsImageByPeriod(@AuthenticationPrincipal User currentUser,
-                                   @RequestBody User user, @RequestParam Long buildingId,
-                                   @RequestParam Date from, @RequestParam Date to,
-                                   HttpServletRequest request) throws IOException {
+    public @ResponseBody ResponseEntity<byte[]> getChartAsImageByPeriod(@AuthenticationPrincipal User currentUser,
+                                                   @RequestBody User user, @RequestParam Long buildingId,
+                                                   @RequestParam Date from, @RequestParam Date to,
+                                                   HttpServletRequest request) throws IOException {
         Building building = buildingService.findById(buildingId);
         if (!currentUser.getEmail().equals(user.getEmail())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -80,9 +77,10 @@ public class StatisticsController {
 */
         HttpHeaders headers = new HttpHeaders();
         InputStream in = request.getServletContext().getResourceAsStream("/WEB-INF/images/chart.png");
-        byte[] media = IOUtils.toByteArray(in);
-        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-
-        return new ResponseEntity<>(media, headers, HttpStatus.OK);
+//        byte[] media = IOUtils.toByteArray(in);
+//        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+//
+//        return new ResponseEntity<>(media, headers, HttpStatus.OK);
+        return new ResponseEntity<>(IOUtils.toByteArray(in), HttpStatus.OK);
     }
 }

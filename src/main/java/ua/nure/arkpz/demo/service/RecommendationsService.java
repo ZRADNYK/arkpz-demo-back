@@ -22,10 +22,10 @@ public class RecommendationsService {
     private final RecommendationsDao recommendationsDao;
 
     @Value("${upper-temperature-bound}")
-    private static double UPPER_TEMPERATURE_BOUND;
+    private double UPPER_TEMPERATURE_BOUND;
 
     @Value("${workers-density-multiplier}")
-    private static double WORKERS_DENSITY_MULTIPLIER;
+    private double WORKERS_DENSITY_MULTIPLIER;
 
 
     @Autowired
