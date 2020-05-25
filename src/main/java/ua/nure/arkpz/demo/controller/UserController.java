@@ -44,13 +44,13 @@ public class UserController {
 
     @PatchMapping("/{userId}/password")
     public ResponseEntity<User> updateUserPassword(@PathVariable Long userId,
-                                                  @RequestBody String password,
+                                                  @RequestBody User userWithNewPassword,
                                                   @AuthenticationPrincipal User currentUser) {
         User existingUser = userService.findByUserId(userId);
         if (!existingUser.equals(currentUser)) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        existingUser = authenticationService.updatePassword(existingUser, password);
+        existingUser = authenticationService.updatePassword(existingUser, userWithNewPassword.getPassword());
         return new ResponseEntity<>(existingUser, HttpStatus.OK);
     }
 
