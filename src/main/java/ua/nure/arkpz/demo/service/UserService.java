@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.nure.arkpz.demo.dao.UserDao;
 import ua.nure.arkpz.demo.model.User;
@@ -15,10 +16,11 @@ import java.util.Set;
 public class UserService implements UserDetailsService {
     private final UserDao userDao;
 
+
     @Autowired
     public UserService(UserDao userDao) {
         this.userDao = userDao;
-    }
+     }
 
     public User findByUserId(Long userId) {
         return userDao.findById(userId).get();
