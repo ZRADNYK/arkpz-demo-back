@@ -13,10 +13,7 @@ import ua.nure.arkpz.demo.role.Role;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -90,6 +87,8 @@ public class User implements UserDetails {
     @Column(name = "is_enabled")
     private Boolean isEnabled;
 
+    @OneToMany(targetEntity = Building.class, fetch = FetchType.EAGER)
+    private List<Building> buildings;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -228,6 +227,14 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Building> getBuildings() {
+        return buildings;
+    }
+
+    public void setBuildings(List<Building> buildings) {
+        this.buildings = buildings;
     }
 
     @Override
