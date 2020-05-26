@@ -59,8 +59,7 @@ public class StatisticsController {
     }
 
     @PatchMapping(value = "/statistics/period/chart",
-            produces = MediaType.IMAGE_JPEG_VALUE)
-    // TODO rework
+            produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody ResponseEntity<byte[]> getChartAsImageByPeriod(@AuthenticationPrincipal User currentUser,
                                                    @RequestBody User user, @RequestParam Long buildingId,
                                                    @RequestParam Date from, @RequestParam Date to,
@@ -75,12 +74,7 @@ public class StatisticsController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 */
-        HttpHeaders headers = new HttpHeaders();
         InputStream in = request.getServletContext().getResourceAsStream("/WEB-INF/images/chart.png");
-//        byte[] media = IOUtils.toByteArray(in);
-//        headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-//
-//        return new ResponseEntity<>(media, headers, HttpStatus.OK);
         return new ResponseEntity<>(IOUtils.toByteArray(in), HttpStatus.OK);
     }
 }
