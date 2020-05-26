@@ -34,6 +34,7 @@ public class RecommendationsController {
         if(!building.equals(buildingService.findByOwner(user))) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(recommendationsService.prepareRecommendationsForBuilding(building), HttpStatus.OK);
+        return new ResponseEntity("Тікай з міста, закрывай кафе, а то от короны сдохнешь", HttpStatus.OK);
+       // return new ResponseEntity(recommendationsService.prepareRecommendationsForBuilding(building), HttpStatus.OK);
     }
 }
