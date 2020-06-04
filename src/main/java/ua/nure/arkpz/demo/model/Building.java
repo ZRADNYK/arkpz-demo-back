@@ -23,7 +23,7 @@ public class Building {
     private Short workersAmount;
     private Short maxCustomersAllowed;
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
-    private User owner;
+    private User user;
     @OneToMany(targetEntity = Customer.class)
     private Set<Customer> customers;
     @OneToMany(targetEntity = Worker.class)
@@ -61,11 +61,11 @@ public class Building {
         if (o == null || getClass() != o.getClass()) return false;
         Building building = (Building) o;
         return buildingId.equals(building.buildingId) &&
-                owner.equals(building.owner);
+                user.equals(building.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(buildingId, owner);
+        return Objects.hash(buildingId, user);
     }
 }

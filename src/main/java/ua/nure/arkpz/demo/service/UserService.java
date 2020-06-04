@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.nure.arkpz.demo.dao.UserDao;
+import ua.nure.arkpz.demo.dto.UserDto;
 import ua.nure.arkpz.demo.model.User;
 import ua.nure.arkpz.demo.role.Role;
 
@@ -26,7 +27,7 @@ public class UserService implements UserDetailsService {
         return userDao.findById(userId).get();
     }
 
-    public User updateUser(User oldUser, User newUser) {
+    public User updateUser(User oldUser, UserDto newUser) {
         BeanUtils.copyProperties(newUser, oldUser);
         userDao.save(oldUser);
         return oldUser;

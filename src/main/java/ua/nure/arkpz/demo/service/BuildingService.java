@@ -13,8 +13,6 @@ import ua.nure.arkpz.demo.model.User;
 import ua.nure.arkpz.demo.validator.OvalValidatorImpl;
 
 import java.util.ArrayList;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class BuildingService {
@@ -45,7 +43,7 @@ public class BuildingService {
                 .entersAmount(buildingDto.getEntersAmount())
                 .workersAmount(buildingDto.getWorkersAmount())
                 .maxCustomersAllowed(calculateMaxCustomersNumber(buildingDto.getWorkersAmount(), buildingDto.getArea()))
-                .owner(owner)
+                .user(owner)
                 .build();
         validator.validate(building);
         buildingDao.save(building);
@@ -80,7 +78,7 @@ public class BuildingService {
     }
 
     public ArrayList<Building> findByOwner(User user) {
-        return buildingDao.findByOwner(user);
+        return buildingDao.findByUser(user);
     }
 
     /*public Set<Building> findAllBuildingsByUser(User user) {

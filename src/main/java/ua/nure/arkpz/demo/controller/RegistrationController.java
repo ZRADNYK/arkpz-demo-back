@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ua.nure.arkpz.demo.dto.UserDto;
 import ua.nure.arkpz.demo.model.User;
 import ua.nure.arkpz.demo.service.RegistrationService;
 import ua.nure.arkpz.demo.service.UserService;
@@ -27,14 +28,14 @@ public class RegistrationController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User userDTO) {
-        final UserDetails userDetails = userService.loadUserByUsername(userDTO.getEmail());
+    public ResponseEntity<?> register(@RequestBody UserDto userDto) {
+        final UserDetails userDetails = userService.loadUserByUsername(userDto.getEmail());
 
-        if (userDetails.getUsername().equals(userDTO.getEmail())) {
+        if (userDetails.getUsername().equals(userDto.getEmail())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-        User registeredUser = registrationService.registerUser(userDTO);
+        User registeredUser = registrationService.registerUser(userDto);
         return ResponseEntity.ok(registeredUser);
     }
 }

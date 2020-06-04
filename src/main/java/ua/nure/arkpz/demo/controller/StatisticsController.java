@@ -59,7 +59,7 @@ public class StatisticsController {
     }
 
     @PatchMapping(value = "/statistics/period/chart",
-            produces = MediaType.IMAGE_PNG_VALUE)
+               produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody ResponseEntity<byte[]> getChartAsImageByPeriod(@AuthenticationPrincipal User currentUser,
                                                    @RequestBody User user, @RequestParam Long buildingId,
                                                    @RequestParam Date from, @RequestParam Date to,

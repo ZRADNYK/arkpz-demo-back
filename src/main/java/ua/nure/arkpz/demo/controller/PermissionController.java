@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,12 @@ public class PermissionController {
     }
 
     @PatchMapping("/permissions/{userId}/makeSuperadmin")
-    public ResponseEntity<User> makeUserSuperadmin(@PathVariable Long userId) {
+    public ResponseEntity<User> makeUserSuperadmin(@PathVariable Long userId,
+                                                   @AuthenticationPrincipal User userDto) {
+        User currentUser = userService.findByEmail(userDto.getEmail());
+        if(!(currentUser.getAuthorities().contains(Role.ADMIN) || currentUser.getAuthorities().contains(Role.SUPERADMIN))) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         User existingUser = userService.findByUserId(userId);
         if(existingUser == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -35,7 +41,12 @@ public class PermissionController {
 
    // @Secured("ROLE_SUPERADMIN")
     @PatchMapping("/{userId}/makeAdmin")
-    public ResponseEntity<User> makeUserAdmin(@PathVariable Long userId) {
+    public ResponseEntity<User> makeUserAdmin(@PathVariable Long userId,
+                                              @AuthenticationPrincipal User userDto) {
+        User currentUser = userService.findByEmail(userDto.getEmail());
+        if(!(currentUser.getAuthorities().contains(Role.ADMIN) || currentUser.getAuthorities().contains(Role.SUPERADMIN))) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         User existingUser = userService.findByUserId(userId);
         if(existingUser == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -49,7 +60,12 @@ public class PermissionController {
 
  //   @Secured("ROLE_SUPERADMIN")
     @PatchMapping("/{userId}/makeUser")
-    public ResponseEntity<User> makeAdminUser(@PathVariable Long userId) {
+    public ResponseEntity<User> makeAdminUser(@PathVariable Long userId,
+                                              @AuthenticationPrincipal User userDto) {
+        User currentUser = userService.findByEmail(userDto.getEmail());
+        if(!(currentUser.getAuthorities().contains(Role.ADMIN) || currentUser.getAuthorities().contains(Role.SUPERADMIN))) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         User existingUser = userService.findByUserId(userId);
         if(existingUser == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

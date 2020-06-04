@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import ua.nure.arkpz.demo.dto.UserDto;
 import ua.nure.arkpz.demo.model.User;
 import ua.nure.arkpz.demo.service.AuthenticationService;
 import ua.nure.arkpz.demo.service.UserService;
@@ -32,25 +33,25 @@ public class UserController {
 
     @PatchMapping("/{userId}/profile")
     public ResponseEntity<User> updateUserProfile(@PathVariable Long userId,
-                                                  @RequestBody User user,
-                                                  @AuthenticationPrincipal User currentUser) {
+                                                  @RequestBody UserDto userDto,
+                                                  @AuthenticationPrincipal User authenticatedUser) {
         User existingUser = userService.findByUserId(userId);
-        if (!existingUser.equals(currentUser)) {
+        if (!existingUser.equals(authenticatedUser)) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        existingUser = userService.updateUser(existingUser, user);
+        existingUser = userService.updateUser(existingUser, userDto);
         return new ResponseEntity<>(existingUser, HttpStatus.OK);
     }
 
     @PatchMapping("/{userId}/password")
     public ResponseEntity<User> updateUserPassword(@PathVariable Long userId,
-                                                  @RequestBody User userWithNewPassword,
+                                                  @RequestBody UserDto userDto,
                                                   @AuthenticationPrincipal User currentUser) {
         User existingUser = userService.findByUserId(userId);
         if (!existingUser.equals(currentUser)) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        existingUser = authenticationService.updatePassword(existingUser, userWithNewPassword.getPassword());
+        existingUser = authenticationService.updatePassword(existingUser, userDto.getPassword());
         return new ResponseEntity<>(existingUser, HttpStatus.OK);
     }
 

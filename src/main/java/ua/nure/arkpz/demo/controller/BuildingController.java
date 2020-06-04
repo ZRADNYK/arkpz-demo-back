@@ -12,6 +12,7 @@ import ua.nure.arkpz.demo.service.UserService;
 
 import java.util.Set;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class BuildingController {
     private final BuildingService buildingService;
@@ -68,7 +69,7 @@ public class BuildingController {
         else return new ResponseEntity<>(existingBuilding, HttpStatus.OK);
     }
 
-    @GetMapping("/buildings")
+    @GetMapping("api/buildings")
     public ResponseEntity<Set<Building>> getBuildingsByUserId(@RequestParam Long userId) {
         User user = userService.findByUserId(userId);
         if(user == null) {

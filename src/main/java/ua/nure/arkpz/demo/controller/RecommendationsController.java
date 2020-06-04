@@ -32,7 +32,7 @@ public class RecommendationsController {
                                                              @RequestParam Long buildingId) {
         User user = userService.findByUserId(currentUser.getUserId());
         Building building = buildingService.findById(buildingId);
-        if (!user.getUserId().equals(building.getOwner().getUserId())) {
+        if (!user.getUserId().equals(building.getUser().getUserId())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity("Тікай з міста, закрывай кафе, а то от короны сдохнешь", HttpStatus.OK);

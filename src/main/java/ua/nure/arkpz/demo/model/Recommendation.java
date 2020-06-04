@@ -18,12 +18,13 @@ public class Recommendation {
     @Column(name = "recommendation_id")
     private Long recommendationId;
 
-    @Column(name = "text", length = 1024)
+    @Column(name = "text_english", length = 1024)
     @MatchPattern(pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message = "Incorrect symbols in text")
-    private String text;
+    private String textEnglish;
 
-    @Column(name = "type")
-    private String type;
+    @Column(name = "text_ukrainian", length = 1024)
+    @MatchPattern(pattern = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message = "Incorrect symbols in text")
+    private String textUkrainian;
 
     @Column(name = "minimal_density")
     private Double minimalDensity;

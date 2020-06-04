@@ -11,6 +11,6 @@ import java.util.ArrayList;
 public interface BuildingDao extends JpaRepository<Building, Long> {
     Building findByNameAndAddress(String name, String address);
     Building findByAddress(String address);
-    ArrayList<Building> findByOwner(User user);
+    ArrayList<Building> findByUser(User user);
     Building findByName(String buildingName);
 }
