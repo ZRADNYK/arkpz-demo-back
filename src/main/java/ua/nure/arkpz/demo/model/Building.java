@@ -15,20 +15,32 @@ import java.util.Set;
 public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "building_id")
     private Long buildingId;
+    @Column(name = "name")
     private String name;
+    @Column(name = "area")
     private Double area;
+    @Column(name = "address")
     private String address;
+    @Column(name = "enters_amount")
     private Short entersAmount;
+    @Column(name = "workers_amount")
     private Short workersAmount;
+    @Column(name = "max_customers_allowed")
     private Short maxCustomersAllowed;
-    @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+
+    @ManyToOne
     private User user;
+
     @OneToMany(targetEntity = Customer.class)
+    @JoinColumn(name = "customer_id")
     private Set<Customer> customers;
     @OneToMany(targetEntity = Worker.class)
+    @JoinColumn(name = "worker_id")
     private Set<Worker> workers;
     @OneToMany(targetEntity = History.class)
+    @JoinColumn(name = "history_id")
     private Set<History> histories;
 
     public Set<Customer> addCustomer(Customer customer) {

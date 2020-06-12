@@ -15,6 +15,7 @@ import java.sql.Date;
 public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "history_id")
     private Long historyId;
 
     private Date measuringDate;
@@ -24,5 +25,6 @@ public class History {
     private int sickingWorkersInsideAmount;
 
     @ManyToOne(targetEntity = Building.class)
+    @JoinColumn(name = "building_id")
     private Building building;
 }

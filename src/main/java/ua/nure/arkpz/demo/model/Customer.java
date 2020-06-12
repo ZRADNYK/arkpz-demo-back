@@ -15,6 +15,7 @@ import java.sql.Time;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "customer_id")
     private Long customerId;
     private Double temperature;
     private Boolean isSicking;

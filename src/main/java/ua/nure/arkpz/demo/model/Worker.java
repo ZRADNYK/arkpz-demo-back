@@ -15,6 +15,7 @@ import java.sql.Time;
 public class Worker {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "worker_id")
     private Long workerId;
     private Double temperature;
     private Boolean isSicking;
@@ -22,5 +23,6 @@ public class Worker {
     private Time outTime;
     
     @OneToOne(targetEntity = Building.class)
+    @JoinColumn(name = "building_id")
     public Building currentBuilding;
 }
