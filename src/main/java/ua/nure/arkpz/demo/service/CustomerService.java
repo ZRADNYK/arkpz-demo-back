@@ -1,6 +1,5 @@
 package ua.nure.arkpz.demo.service;
 
-import jdk.javadoc.internal.doclets.formats.html.markup.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.nure.arkpz.demo.dao.BuildingDao;
