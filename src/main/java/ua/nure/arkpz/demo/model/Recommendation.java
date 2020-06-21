@@ -1,14 +1,14 @@
 package ua.nure.arkpz.demo.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import net.sf.oval.constraint.MatchPattern;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Builder
 @Table(name = "recommendation")
 @Entity

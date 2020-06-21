@@ -366,18 +366,18 @@ values (26, 'AB-100', 'Main entrance', 'Temperature detector, works on 2m distan
 #TODO : history creates every time when user wants to get statistics. No need to create special script
 
 insert into recommendation
-values (1, 10.0, 0.0, 'There is no infectious threat in this building. You can slightly weaken antiviral measures',
+values (1, 0.1, 0.0, 'There is no infectious threat in this building. You can slightly weaken antiviral measures',
         'Інфекційна загроза у даному закладі відсутня. Можливе послаблення противірусних заходів');
 insert into recommendation
-values (2, 20.0, 10.0,
+values (2, 0.2, 0.1,
         'There is a slight infectious threat in this building. Take care of the social distance between customers and the make sure that employees are wearing protective masks and gloves.',
         'Існує незначна інфекційна загроза. Подбайте про соціальну дістанцію між клієнтами та наявність захисних масок та перчаток у працівників.');
 insert into recommendation
-values (3, 40.0, 20.0,
+values (3, 0.9, 0.2,
         'There is an infectious threat in this building. You need to clean building regularly using. Carefully monitor temperature and possible disease symptoms of your employees',
         'Присутня інфекційна загроза. Необхідні регулярні вологі прибирання з дезінфікуючими засобами. Уважно слідкуйте за самопочуттям працівників вашого закладу');
 insert into recommendation
-values (4, 100.0, 40.0,
+values (4, 100, 0.9,
         'There is significant infectious threat in this building. You need to close it immediately, clean it using disinfectants and let your employees move to self-isolation.',
         'Значна інфекційна загроза. Необхідно негайно зачинити приміщення для проведення заходів з дезинфекції та помістити його працівників у режим обсервації.');
 

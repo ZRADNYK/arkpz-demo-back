@@ -9,8 +9,8 @@ import ua.nure.arkpz.demo.model.Customer;
 import ua.nure.arkpz.demo.validator.OvalValidatorImpl;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,9 +89,10 @@ public class CustomerService {
     }
 
     public List<Customer> findCustomerByBuildingAndPeriod(Building building, Date from, Date to) {
-        Time timeFrom = Time.valueOf(String.valueOf(from));
-        Time timeTo = Time.valueOf(String.valueOf(to));
-        return customerDao.findByCurrentBuildingAndEntryTimeBetween(building, timeFrom, timeTo);
+        Timestamp ts=new Timestamp(from.getTime());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return customerDao.findByCurrentBuildingAndEntryTimeBetweenOrderByEntryTime(building, new Timestamp(from.getTime()),
+                new Timestamp(to.getTime()));
     }
 
     public List<Customer> findCustomerByBuilding(Building building) {

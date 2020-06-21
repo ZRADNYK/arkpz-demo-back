@@ -7,4 +7,5 @@ import ua.nure.arkpz.demo.model.Recommendation;
 @Repository
 public interface RecommendationsDao extends JpaRepository<Recommendation, Long> {
     Recommendation findByMaximalDensityIsLessThanEqualAndMinimalDensityIsGreaterThanEqual(double density, double sameDensity);
+    Recommendation findByMinimalDensityGreaterThanEqual(double density);
 }

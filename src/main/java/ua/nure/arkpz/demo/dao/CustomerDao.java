@@ -7,6 +7,7 @@ import ua.nure.arkpz.demo.model.Customer;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +16,9 @@ public interface CustomerDao extends JpaRepository<Customer, Long> {
     ArrayList<Customer> findByCurrentBuildingAndTemperatureBetween(Building building,
                                                                    double temperatureLowerBound, double temperatureUpperBound);
 
-    ArrayList<Customer> findByCurrentBuildingAndTemperatureIsGreaterThanEqual(Building building, double temperatureBound);
+    ArrayList<Customer> findByCurrentBuildingAndTemperatureIsGreaterThanEqualAndEntryTimeBetweenOrderByEntryTime(Building building, double temperatureBound, Timestamp entryTime, Timestamp entryTime2);
 
-    List<Customer> findByCurrentBuildingAndEntryTimeBetween(Building currentBuilding, Time entryTime, Time entryTime2);
+    List<Customer> findByCurrentBuildingAndEntryTimeBetweenOrderByEntryTime(Building currentBuilding, Timestamp entryTime, Timestamp entryTime2);
 
     List<Customer> findByCurrentBuildingOrderByEntryTime(Building building);
 }

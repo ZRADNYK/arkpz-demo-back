@@ -27,7 +27,7 @@ public class RecommendationsController {
         this.userService = userService;
     }
 
-    @GetMapping("/recommendations")
+    @GetMapping("/api/recommendations")
     public ResponseEntity<Recommendation> getRecommendations(@AuthenticationPrincipal User currentUser,
                                                              @RequestParam Long buildingId) {
         User user = userService.findByUserId(currentUser.getUserId());
@@ -35,6 +35,7 @@ public class RecommendationsController {
         if (!user.getUserId().equals(building.getUser().getUserId())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity("Тікай з міста, закрывай кафе, а то от короны сдохнешь", HttpStatus.OK);
+        Recommendation recommendation = recommendationsService.prepareRecommendationsForBuilding(building);
+        return ResponseEntity.ok(recommendation);
     }
 }

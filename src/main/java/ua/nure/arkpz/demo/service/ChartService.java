@@ -56,7 +56,7 @@ public class ChartService {
         return chart;
     }
 
-    public Chart createNewCustomerChartPeriod(Building building, Date from, Date to) {
+    public CustomerChart createNewCustomerChartPeriod(Building building, Date from, Date to) {
         List<Customer> customers = customerService.findCustomerByBuildingAndPeriod(building, from, to);
         List<Customer> sickingCustomers = new ArrayList<>();
         for(Customer customer : customers) {
@@ -65,7 +65,7 @@ public class ChartService {
             }
         }
 
-        return null;
+        return new CustomerChart(customers, sickingCustomers);
     }
 
     public CustomerChart createNewChartForAllBuilding(Building building) {

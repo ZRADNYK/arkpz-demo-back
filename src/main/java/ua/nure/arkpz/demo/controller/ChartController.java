@@ -59,7 +59,7 @@ public class ChartController {
         return new ResponseEntity<>(chart, HttpStatus.OK);
     }
 
-    @GetMapping("/statistics/period/chart/period")
+    @GetMapping("api/statistics/period/chart/period")
     public Object getChartByPeriod(@AuthenticationPrincipal User currentUser,
                                    @RequestParam Long buildingId,
                                    @RequestParam Date from, @RequestParam Date to) {
@@ -73,7 +73,7 @@ public class ChartController {
         }*/
 
         // Chart chart = chartService.createChartForBuildingByPeriod(building, from, to);
-        Chart chart = chartService.createNewCustomerChartPeriod(building, from, to);
+        CustomerChart chart = chartService.createNewCustomerChartPeriod(building, from, to);
         return new ResponseEntity<>(chart, HttpStatus.OK);
     }
 }

@@ -12,7 +12,10 @@ import ua.nure.arkpz.demo.model.Customer;
 import ua.nure.arkpz.demo.model.Recommendation;
 import ua.nure.arkpz.demo.model.Worker;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 @Service
 public class RecommendationsService {
@@ -37,22 +40,23 @@ public class RecommendationsService {
         this.recommendationsDao = recommendationsDao;
     }
 
-    public ArrayList<Recommendation> prepareRecommendationsForBuilding(Building building) {
+    public Recommendation prepareRecommendationsForBuilding(Building building) {
+        int daysBefore = 3;
+        long millis = System.currentTimeMillis();
+        Date now = new Date(millis);
+        Date from = subtractDays(now, daysBefore);
+
         ArrayList<Customer> sickingCustomers =
-                customerDao.findByCurrentBuildingAndTemperatureIsGreaterThanEqual(building, UPPER_TEMPERATURE_BOUND);
+                customerDao.findByCurrentBuildingAndTemperatureIsGreaterThanEqualAndEntryTimeBetweenOrderByEntryTime(
+                        building, UPPER_TEMPERATURE_BOUND, new Timestamp(from.getTime()), new Timestamp(now.getTime()));
         ArrayList<Worker> sickingWorkers =
                 workerDao.findByCurrentBuildingAndTemperatureIsGreaterThanEqual(building, UPPER_TEMPERATURE_BOUND);
         ArrayList<Recommendation> recommendations = new ArrayList<>();
 
-        recommendations.add(recommendationsDao.findByMaximalDensityIsLessThanEqualAndMinimalDensityIsGreaterThanEqual(
-                calculateDensityOfSickingCustomers(building, sickingCustomers),
-                calculateDensityOfSickingCustomers(building, sickingCustomers)));
+        double density = calculateDensityOfSickingCustomers(building, sickingCustomers);
 
-        recommendations.add(recommendationsDao.findByMaximalDensityIsLessThanEqualAndMinimalDensityIsGreaterThanEqual(
-                calculateDensityOfSickingWorkers(building, sickingWorkers),
-                calculateDensityOfSickingWorkers(building, sickingWorkers)));
+        return recommendationsDao.findByMinimalDensityGreaterThanEqual(density);
 
-        return recommendations;
     }
 
     private double calculateDensityOfSickingCustomers(Building building, ArrayList<Customer> sickingCustomers) {
@@ -62,4 +66,12 @@ public class RecommendationsService {
     private double calculateDensityOfSickingWorkers(Building building, ArrayList<Worker> sickingWorkers) {
         return sickingWorkers.size() / building.getArea() * WORKERS_DENSITY_MULTIPLIER;
     }
+
+    private Date subtractDays(Date date, int days) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, -days);
+        return new Date(c.getTimeInMillis());
+    }
+
 }
