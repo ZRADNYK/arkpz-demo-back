@@ -1,5 +1,6 @@
 package ua.nure.arkpz.demo.service;
 
+import jdk.javadoc.internal.doclets.formats.html.markup.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.nure.arkpz.demo.dao.BuildingDao;
@@ -8,8 +9,11 @@ import ua.nure.arkpz.demo.model.Building;
 import ua.nure.arkpz.demo.model.Customer;
 import ua.nure.arkpz.demo.validator.OvalValidatorImpl;
 
+import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CustomerService {
@@ -53,7 +57,7 @@ public class CustomerService {
                 customer.getTemperature() + 3.0);
 
         Customer customerToLeave = findClosestTemperature(customer.getTemperature(), potentialCustomers);
-        customerToLeave.setOutTime(new Time(System.currentTimeMillis()));
+        customerToLeave.setOutTime(new Timestamp(System.currentTimeMillis()));
 
         building.deleteCustomer(customer);
         buildingDao.save(building);
@@ -83,5 +87,15 @@ public class CustomerService {
             }
         }
         return foundCustomer;
+    }
+
+    public List<Customer> findCustomerByBuildingAndPeriod(Building building, Date from, Date to) {
+        Time timeFrom = Time.valueOf(String.valueOf(from));
+        Time timeTo = Time.valueOf(String.valueOf(to));
+        return customerDao.findByCurrentBuildingAndEntryTimeBetween(building, timeFrom, timeTo);
+    }
+
+    public List<Customer> findCustomerByBuilding(Building building) {
+        return customerDao.findByCurrentBuildingOrderByEntryTime(building);
     }
 }

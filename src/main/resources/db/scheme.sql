@@ -31,9 +31,9 @@ create table building_workers
 create table customer
 (
     customer_id                  bigint not null,
-    entry_time                   time,
+    entry_time                   datetime,
     is_sicking                   bit,
-    out_time                     time,
+    out_time                     datetime,
     temperature                  double precision,
     current_building_building_id bigint,
     primary key (customer_id)
@@ -109,36 +109,6 @@ create table worker
     current_building_building_id bigint,
     primary key (worker_id)
 ) engine = InnoDB;
-alter table building_customers
-    add constraint UK_9718gyy5b97jv7gqr9t1oedp9 unique (customers_customer_id);
-alter table building_histories
-    add constraint UK_sxaha6n9rv5oc21hv6pknh70a unique (histories_history_id);
-alter table building_workers
-    add constraint UK_2echy5xm0bdkr7yvw1x3o2q8e unique (workers_worker_id);
-alter table usr
-    add constraint UK_g9l96r670qkidthshajdtxrqf unique (email);
-alter table building
-    add constraint FK42cs4ypy3a9kqg56mojk0hlc3 foreign key (user_id) references usr (user_id);
-alter table building_customers
-    add constraint FK9afvsw9al8wfjwynp23ia2chq foreign key (customers_customer_id) references customer (customer_id);
-alter table building_customers
-    add constraint FKee982quf8e3t4mxdxm7w9bcmj foreign key (building_building_id) references building (building_id);
-alter table building_histories
-    add constraint FKrjqhrl9kunbhghmjkm5shrwib foreign key (histories_history_id) references history (history_id);
-alter table building_histories
-    add constraint FKquhpx2t35mb8afwce3vmckdk4 foreign key (building_building_id) references building (building_id);
-alter table building_workers
-    add constraint FKns909k5ayk2hwy79a284gnvkl foreign key (workers_worker_id) references worker (worker_id);
-alter table building_workers
-    add constraint FKpm5e01y4emc0ox1yhi8tsmric foreign key (building_building_id) references building (building_id);
-alter table customer
-    add constraint FK9n0gu43tsogbdvtmxb8tf3so2 foreign key (current_building_building_id) references building (building_id);
-alter table history
-    add constraint FKkf0wiix150vey2b81krij1gh foreign key (building_building_id) references building (building_id);
-alter table user_role
-    add constraint FKfpm8swft53ulq2hl11yplpr5 foreign key (user_id) references usr (user_id);
-alter table worker
-    add constraint FK3jqdk8uehqd89xmumkn9kwljh foreign key (current_building_building_id) references building (building_id);
 
 insert into usr (birth_date, email, first_name, is_account_non_expired, is_account_non_locked,
                  is_credentials_non_expired, is_enabled, last_name, password, token, token_expiration_date, user_id)
@@ -192,349 +162,46 @@ values (8, 'USER');
 insert into user_role (user_id, roles)
 values (9, 'USER');
 
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
                       building_id)
 values ('pr. Nauky, 70', 40, 2, 10, 'AromaKava', 3, 4, 3);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
                       building_id)
 values ('pr. Peremohy, 20', 10, 1, 1, 'AromaKava', 3, 1, 4);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
                       building_id)
 values ('str. Romena Rollana, 16', 40, 2, 10, 'AromaKava', 3, 2, 5);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
                       building_id)
 values ('str. Poltavskii Shliah, 140', 70, 3, 15, 'AromaKava', 3, 4, 6);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
                       building_id)
 values ('nab. Kharkivska, 7/9', 140, 3, 14, 'Antikafe 7/9', 4, 4, 7);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
                       building_id)
 values ('str. Beketova, 17', 35, 2, 10, 'Oblomov', 4, 3, 8);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
                       building_id)
 values ('str. Poltavskii Shliah, 155', 45, 2, 12, 'McDonalds', 4, 6, 9);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
                       building_id)
 values ('str. Nauky, 41', 45, 2, 12, 'McDonalds', 5, 6, 10);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
                       building_id)
 values ('str. Beketova, 117', 45, 2, 12, 'McDonalds', 5, 6, 11);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
                       building_id)
 values ('str. Romena Rollana, 16', 45, 2, 12, 'McDonalds', 5, 6, 12);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
                       building_id)
 values ('sq. Povstannia, 16', 45, 2, 12, 'Kulynychy', 6, 6, 13);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
                       building_id)
 values ('sq. Zakhysnykiv Ukrayiny, 18', 45, 2, 12, 'Kulynychy', 6, 6, 14);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
                       building_id)
 values ('pr. Metrobudyvnykicv, 198', 45, 2, 12, 'Kulynychy', 6, 6, 15);
 
-insert into customer
-values (25, '2020-11-05 18:00:00', 0, '2020-11-05 08:45:00', 37.6, 3);
-insert into customer
-values (26, '2020-11-05 08:05:00', 0, '2020-11-05 08:37:00', 36.6, 3);
-insert into customer
-values (27, '2020-11-06 08:10:00', 0, '2020-11-06 08:45:23', 36.7, 3);
-insert into customer
-values (28, '2020-11-06 09:00:00', 0, '2020-11-06 09:45:00', 36.9, 3);
-insert into customer
-values (29, '2020-11-06 11:00:23', 1, '2020-11-06 12:45:00', 37.7, 3);
-insert into customer
-values (30, '2020-11-06 14:00:00', 0, '2020-11-06 14:05:00', 37.2, 3);
-insert into customer
-values (31, '2020-11-06 18:06:00', 0, '2020-11-06 18:45:00', 36.8, 3);
-insert into customer
-values (32, '2020-11-06 18:04:00', 0, '2020-11-06 18:45:00', 36.6, 3);
-insert into customer
-values (33, '2020-11-07 18:01:00', 0, '2020-11-07 18:45:00', 36.6, 3);
-insert into customer
-values (34, '2020-11-07 18:00:00', 1, '2020-11-07 18:45:00', 39.0, 3);
-insert into customer
-values (35, '2020-11-07 19:14:45', 0, '2020-11-07 19:18:31', 36.7, 3);
-insert into customer
-values (36, '2020-11-07 21:00:00', 0, '2020-11-07 21:13:00', 36.6, 3);
-insert into customer
-values (1, '2020-11-05 08:00:00', 0, '2020-11-05 08:45:00', 36.6, 3);
-insert into customer
-values (2, '2020-11-05 08:05:00', 0, '2020-11-05 08:37:00', 36.6, 3);
-insert into customer
-values (3, '2020-11-05 08:10:00', 0, '2020-11-05 08:45:23', 36.7, 3);
-insert into customer
-values (4, '2020-11-05 09:00:00', 0, '2020-11-05 09:45:00', 36.9, 3);
-insert into customer
-values (5, '2020-11-05 11:00:23', 0, '2020-11-05 12:45:00', 36.7, 3);
-insert into customer
-values (6, '2020-11-05 14:00:00', 1, '2020-11-05 14:05:00', 38.2, 3);
-insert into customer
-values (7, '2020-11-06 18:00:00', 0, '2020-11-06 18:45:00', 36.6, 3);
-insert into customer
-values (8, '2020-11-06 18:00:00', 0, '2020-11-06 18:45:00', 36.6, 3);
-insert into customer
-values (9, '2020-11-06 18:00:00', 1, '2020-11-06 18:45:00', 38.6, 3);
-insert into customer
-values (10, '2020-11-07 18:00:00', 0, '2020-11-07 18:45:00', 36.7, 3);
-insert into customer
-values (11, '2020-11-07 19:14:45', 0, '2020-11-07 19:18:31', 36.7, 3);
-insert into customer
-values (12, '2020-11-08 21:00:00', 0, '2020-11-08 21:13:00', 36.6, 3);
-
-insert into customer
-values (37, '2020-11-05 18:00:00', 0, '2020-11-05 08:45:00', 36.6, 4);
-insert into customer
-values (38, '2020-11-06 08:05:00', 0, '2020-11-06 08:37:00', 36.6, 4);
-insert into customer
-values (39, '2020-11-06 08:10:00', 0, '2020-11-06 08:45:23', 36.7, 4);
-insert into customer
-values (40, '2020-11-06 09:00:00', 0, '2020-11-06 09:45:00', 36.9, 4);
-insert into customer
-values (41, '2020-11-07 11:00:23', 1, '2020-11-07 12:45:00', 38.7, 4);
-insert into customer
-values (42, '2020-11-07 14:00:00', 0, '2020-11-07 14:05:00', 39.2, 4);
-insert into customer
-values (43, '2020-11-07 18:06:00', 0, '2020-11-07 18:45:00', 36.6, 4);
-insert into customer
-values (44, '2020-11-07 18:04:00', 0, '2020-11-07 18:45:00', 36.6, 4);
-insert into customer
-values (45, '2020-11-07 18:01:00', 0, '2020-11-07 18:45:00', 36.6, 4);
-insert into customer
-values (46, '2020-11-07 18:00:00', 0, '2020-11-07 18:45:00', 36.7, 4);
-insert into customer
-values (47, '2020-11-07 19:14:45', 0, '2020-11-07 19:18:31', 36.7, 4);
-insert into customer
-values (48, '2020-11-07 21:00:00', 0, '2020-11-07 21:13:00', 36.6, 4);
-insert into customer
-values (13, '2020-11-05 18:00:00', 1, '2020-11-05 08:45:00', 37.6, 4);
-insert into customer
-values (14, '2020-11-05 08:05:00', 0, '2020-11-05 08:37:00', 36.6, 4);
-insert into customer
-values (15, '2020-11-05 08:10:00', 1, '2020-11-05 08:45:23', 36.7, 4);
-insert into customer
-values (16, '2020-11-05 09:00:00', 0, '2020-11-05 09:45:00', 36.9, 4);
-insert into customer
-values (17, '2020-11-06 11:00:23', 0, '2020-11-06 12:45:00', 36.7, 4);
-insert into customer
-values (18, '2020-11-06 14:00:00', 1, '2020-11-06 14:05:00', 38.2, 4);
-insert into customer
-values (19, '2020-11-06 18:06:00', 0, '2020-11-06 18:45:00', 36.6, 4);
-insert into customer
-values (20, '2020-11-06 18:04:00', 0, '2020-11-06 18:45:00', 36.6, 4);
-insert into customer
-values (21, '2020-11-07 18:01:00', 0, '2020-11-07 18:45:00', 36.6, 4);
-insert into customer
-values (22, '2020-11-07 18:00:00', 0, '2020-11-07 18:45:00', 36.7, 4);
-insert into customer
-values (23, '2020-11-07 19:14:45', 0, '2020-11-07 19:18:31', 36.7, 4);
-insert into customer
-values (24, '2020-11-07 21:00:00', 0, '2020-11-07 21:13:00', 36.6, 4);
-
-insert into customer
-values (49, '2020-11-07 18:00:00', 1, '2020-11-07 08:45:00', 37.6, 5);
-insert into customer
-values (50, '2020-11-07 08:05:00', 0, '2020-11-07 08:37:00', 36.6, 5);
-insert into customer
-values (51, '2020-11-07 08:10:00', 0, '2020-11-07 08:45:23', 36.7, 5);
-insert into customer
-values (52, '2020-11-07 09:00:00', 0, '2020-11-07 09:45:00', 36.9, 5);
-insert into customer
-values (53, '2020-11-07 11:00:23', 0, '2020-11-07 12:45:00', 36.7, 5);
-insert into customer
-values (54, '2020-11-07 14:00:00', 0, '2020-11-07 14:05:00', 37.2, 5);
-insert into customer
-values (55, '2020-11-07 18:06:00', 0, '2020-11-07 18:45:00', 36.6, 5);
-insert into customer
-values (56, '2020-11-08 18:04:00', 0, '2020-11-08 18:45:00', 36.6, 5);
-insert into customer
-values (57, '2020-11-08 18:01:00', 0, '2020-11-08 18:45:00', 36.6, 5);
-insert into customer
-values (58, '2020-11-08 18:00:00', 1, '2020-11-08 18:45:00', 37.7, 5);
-insert into customer
-values (59, '2020-11-09 19:14:45', 0, '2020-11-09 19:18:31', 36.7, 5);
-insert into customer
-values (60, '2020-11-09 21:00:00', 0, '2020-11-09 21:13:00', 36.6, 5);
-
-
-insert into customer
-values (61, '2020-11-08 18:00:00', 0, '2020-11-08 08:45:00', 36.6, 6);
-insert into customer
-values (62, '2020-11-08 08:05:00', 0, '2020-11-08 08:37:00', 36.6, 6);
-insert into customer
-values (63, '2020-11-08 08:10:00', 0, '2020-11-08 08:45:23', 36.7, 6);
-insert into customer
-values (64, '2020-11-08 09:00:00', 0, '2020-11-08 09:45:00', 36.9, 6);
-insert into customer
-values (65, '2020-11-09 11:00:23', 0, '2020-11-09 12:45:00', 36.7, 6);
-insert into customer
-values (66, '2020-11-09 14:00:00', 1, '2020-11-09 14:05:00', 38.2, 6);
-insert into customer
-values (67, '2020-11-09 18:06:00', 0, '2020-11-09 18:45:00', 36.6, 6);
-insert into customer
-values (68, '2020-11-09 18:04:00', 0, '2020-11-09 18:45:00', 36.6, 6);
-insert into customer
-values (69, '2020-11-10 18:01:00', 0, '2020-11-10 18:45:00', 36.6, 6);
-insert into customer
-values (70, '2020-11-10 18:00:00', 0, '2020-11-10 18:45:00', 36.7, 6);
-insert into customer
-values (71, '2020-11-10 19:14:45', 0, '2020-11-10 19:18:31', 36.7, 6);
-insert into customer
-values (72, '2020-11-10 21:00:00', 0, '2020-11-10 21:13:00', 36.6, 6);
-
-
-insert into customer
-values (73, '2020-11-05 18:00:00', 0, '2020-11-05 08:45:00', 36.6, 7);
-insert into customer
-values (74, '2020-11-05 08:05:00', 1, '2020-11-05 08:37:00', 38.4, 7);
-insert into customer
-values (75, '2020-11-05 08:10:00', 0, '2020-11-05 08:45:23', 36.7, 7);
-insert into customer
-values (76, '2020-11-05 09:00:00', 1, '2020-11-05 09:45:00', 37.9, 7);
-insert into customer
-values (77, '2020-11-05 11:00:23', 0, '2020-11-05 12:45:00', 36.7, 7);
-insert into customer
-values (78, '2020-11-05 14:00:00', 0, '2020-11-05 14:05:00', 37.2, 7);
-insert into customer
-values (79, '2020-11-05 18:06:00', 0, '2020-11-05 18:45:00', 36.6, 7);
-insert into customer
-values (80, '2020-11-05 18:04:00', 0, '2020-11-05 18:45:00', 36.6, 7);
-insert into customer
-values (81, '2020-11-05 18:01:00', 0, '2020-11-05 18:45:00', 36.6, 7);
-insert into customer
-values (82, '2020-11-05 18:00:00', 0, '2020-11-05 18:45:00', 36.7, 7);
-insert into customer
-values (83, '2020-11-05 19:14:45', 0, '2020-11-05 19:18:31', 36.7, 7);
-insert into customer
-values (84, '2020-11-05 21:00:00', 0, '2020-11-05 21:13:00', 36.6, 7);
-
-
-insert into customer
-values (85, '2020-11-05 18:00:00', 0, '2020-11-05 08:45:00', 36.6, 8);
-insert into customer
-values (86, '2020-11-05 08:05:00', 0, '2020-11-05 08:37:00', 36.6, 8);
-insert into customer
-values (87, '2020-11-05 08:10:00', 0, '2020-11-05 08:45:23', 36.7, 8);
-insert into customer
-values (88, '2020-11-05 09:00:00', 0, '2020-11-05 09:45:00', 36.9, 8);
-insert into customer
-values (89, '2020-11-05 11:00:23', 1, '2020-11-05 12:45:00', 37.7, 8);
-insert into customer
-values (90, '2020-11-05 14:00:00', 0, '2020-11-05 14:05:00', 37.2, 8);
-insert into customer
-values (91, '2020-11-05 18:06:00', 0, '2020-11-05 18:45:00', 36.6, 8);
-insert into customer
-values (92, '2020-11-05 18:04:00', 0, '2020-11-05 18:45:00', 36.6, 8);
-insert into customer
-values (93, '2020-11-05 18:01:00', 1, '2020-11-05 18:45:00', 38.6, 8);
-insert into customer
-values (94, '2020-11-05 18:00:00', 0, '2020-11-05 18:45:00', 36.7, 8);
-insert into customer
-values (95, '2020-11-05 19:14:45', 0, '2020-11-05 19:18:31', 36.7, 8);
-insert into customer
-values (96, '2020-11-05 21:00:00', 1, '2020-11-05 21:13:00', 37.6, 8);
-
-
-insert into customer
-values (97, '2020-11-05 18:00:00', 0, '2020-11-05 08:45:00', 36.6, 9);
-insert into customer
-values (98, '2020-11-05 08:05:00', 0, '2020-11-05 08:37:00', 36.6, 9);
-insert into customer
-values (99, '2020-11-05 08:10:00', 0, '2020-11-05 08:45:23', 36.7, 9);
-insert into customer
-values (100, '2020-11-05 09:00:00', 0, '2020-11-05 09:45:00', 36.9, 9);
-insert into customer
-values (101, '2020-11-05 11:00:23', 0, '2020-11-05 12:45:00', 36.7, 9);
-insert into customer
-values (102, '2020-11-05 14:00:00', 0, '2020-11-05 14:05:00', 37.2, 9);
-insert into customer
-values (103, '2020-11-05 18:06:00', 0, '2020-11-05 18:45:00', 36.6, 9);
-insert into customer
-values (104, '2020-11-05 18:04:00', 1, '2020-11-05 18:45:00', 38.6, 9);
-insert into customer
-values (105, '2020-11-05 18:01:00', 0, '2020-11-05 18:45:00', 36.6, 9);
-insert into customer
-values (106, '2020-11-05 18:00:00', 0, '2020-11-05 18:45:00', 36.7, 9);
-insert into customer
-values (107, '2020-11-05 19:14:45', 0, '2020-11-05 19:18:31', 36.7, 9);
-insert into customer
-values (108, '2020-11-05 21:00:00', 0, '2020-11-05 21:13:00', 36.6, 9);
-
-
-insert into customer
-values (109, '2020-11-05 18:00:00', 1, '2020-11-05 08:45:00', 39.0, 10);
-insert into customer
-values (110, '2020-11-05 08:05:00', 0, '2020-11-05 08:37:00', 36.6, 10);
-insert into customer
-values (111, '2020-11-05 08:10:00', 0, '2020-11-05 08:45:23', 36.7, 10);
-insert into customer
-values (112, '2020-11-05 09:00:00', 0, '2020-11-05 09:45:00', 36.9, 10);
-insert into customer
-values (113, '2020-11-05 11:00:23', 0, '2020-11-05 12:45:00', 36.7, 10);
-insert into customer
-values (114, '2020-11-05 14:00:00', 0, '2020-11-05 14:05:00', 37.2, 10);
-insert into customer
-values (115, '2020-11-05 18:06:00', 0, '2020-11-05 18:45:00', 36.6, 10);
-insert into customer
-values (116, '2020-11-05 18:04:00', 0, '2020-11-05 18:45:00', 36.6, 10);
-insert into customer
-values (117, '2020-11-05 18:01:00', 0, '2020-11-05 18:45:00', 36.6, 10);
-insert into customer
-values (118, '2020-11-05 18:00:00', 0, '2020-11-05 18:45:00', 36.7, 10);
-insert into customer
-values (119, '2020-11-05 19:14:45', 0, '2020-11-05 19:18:31', 36.7, 10);
-insert into customer
-values (120, '2020-11-05 21:00:00', 0, '2020-11-05 21:13:00', 36.6, 10);
-
-
-insert into customer
-values (121, '2020-11-05 18:00:00', 0, '2020-11-05 08:45:00', 36.6, 11);
-insert into customer
-values (122, '2020-11-05 08:05:00', 0, '2020-11-05 08:37:00', 37.6, 11);
-insert into customer
-values (123, '2020-11-05 08:10:00', 0, '2020-11-05 08:45:23', 36.7, 11);
-insert into customer
-values (124, '2020-11-05 09:00:00', 0, '2020-11-05 09:45:00', 36.9, 11);
-insert into customer
-values (125, '2020-11-05 11:00:23', 0, '2020-11-05 12:45:00', 36.7, 11);
-insert into customer
-values (126, '2020-11-05 14:00:00', 0, '2020-11-05 14:05:00', 37.2, 11);
-insert into customer
-values (127, '2020-11-05 18:06:00', 0, '2020-11-05 18:45:00', 36.6, 11);
-insert into customer
-values (128, '2020-11-05 18:04:00', 0, '2020-11-05 18:45:00', 37.6, 11);
-insert into customer
-values (129, '2020-11-05 18:01:00', 0, '2020-11-05 18:45:00', 36.6, 11);
-insert into customer
-values (130, '2020-11-05 18:00:00', 0, '2020-11-05 18:45:00', 36.7, 11);
-insert into customer
-values (131, '2020-11-05 19:14:45', 0, '2020-11-05 19:18:31', 36.6, 11);
-insert into customer
-values (132, '2020-11-05 21:00:00', 0, '2020-11-05 21:13:00', 36.6, 11);
-
-insert into customer
-values (133, '2020-11-05 18:00:00', 0, '2020-11-05 08:45:00', 38.1, 12);
-insert into customer
-values (134, '2020-11-05 08:05:00', 0, '2020-11-05 08:37:00', 36.6, 12);
-insert into customer
-values (135, '2020-11-05 08:10:00', 0, '2020-11-05 08:45:23', 36.7, 12);
-insert into customer
-values (136, '2020-11-05 09:00:00', 0, '2020-11-05 09:45:00', 36.9, 12);
-insert into customer
-values (137, '2020-11-05 11:00:23', 0, '2020-11-05 12:45:00', 36.7, 12);
-insert into customer
-values (138, '2020-11-05 14:00:00', 0, '2020-11-05 14:05:00', 37.2, 12);
-insert into customer
-values (139, '2020-11-05 18:06:00', 0, '2020-11-05 18:45:00', 36.6, 12);
-insert into customer
-values (140, '2020-11-05 18:04:00', 0, '2020-11-05 18:45:00', 37.4, 12);
-insert into customer
-values (141, '2020-11-05 18:01:00', 0, '2020-11-05 18:45:00', 36.6, 12);
-insert into customer
-values (142, '2020-11-05 18:00:00', 0, '2020-11-05 18:45:00', 36.7, 12);
-insert into customer
-values (143, '2020-11-05 19:14:45', 0, '2020-11-05 19:18:31', 36.7, 12);
-insert into customer
-values (144, '2020-11-05 21:00:00', 0, '2020-11-05 21:13:00', 36.6, 12);
 
 insert into worker
 values (1, '2020-11-05 08:00:00', 0, '2020-11-05 21:13:00', 36.6, 3);

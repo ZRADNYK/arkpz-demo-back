@@ -1,5 +1,6 @@
 package ua.nure.arkpz.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,10 +36,13 @@ public class Building {
 
     @OneToMany(targetEntity = Customer.class)
     @JoinColumn(name = "customer_id")
+    @JsonIgnore
     private Set<Customer> customers;
+    @JsonIgnore
     @OneToMany(targetEntity = Worker.class)
     @JoinColumn(name = "worker_id")
     private Set<Worker> workers;
+    @JsonIgnore
     @OneToMany(targetEntity = History.class)
     @JoinColumn(name = "history_id")
     private Set<History> histories;

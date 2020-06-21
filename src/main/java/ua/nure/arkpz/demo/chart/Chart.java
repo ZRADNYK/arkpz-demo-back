@@ -1,4 +1,4 @@
-package ua.nure.arkpz.demo.model;
+package ua.nure.arkpz.demo.chart;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -22,7 +22,7 @@ public class Worker {
     private Time entryTime;
     private Time outTime;
     
-    @OneToOne(targetEntity = Building.class)
-    @JoinColumn(name = "building_id")
+    @ManyToOne(targetEntity = Building.class)
+    //@JoinColumn(name = "building_id")
     public Building currentBuilding;
 }

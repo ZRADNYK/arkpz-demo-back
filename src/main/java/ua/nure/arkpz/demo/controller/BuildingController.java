@@ -60,7 +60,7 @@ public class BuildingController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/buildings/{buildingId}")
+    @GetMapping("api/buildings/{buildingId}")
     public ResponseEntity<Building> getBuildingById(@PathVariable Long buildingId) {
         final Building existingBuilding = buildingService.findById(buildingId);
         if(existingBuilding == null) {

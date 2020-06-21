@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,9 +20,9 @@ public class Customer {
     private Long customerId;
     private Double temperature;
     private Boolean isSicking;
-    private Time entryTime;
-    private Time outTime;
+    private Timestamp entryTime;
+    private Timestamp outTime;
     
-    @OneToOne(targetEntity = Building.class)
+    @ManyToOne(targetEntity = Building.class)
     public Building currentBuilding;
 }

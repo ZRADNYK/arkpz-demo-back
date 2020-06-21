@@ -1,22 +1,31 @@
 package ua.nure.arkpz.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ua.nure.arkpz.demo.model.Building;
-import ua.nure.arkpz.demo.model.Chart;
-import ua.nure.arkpz.demo.model.History;
+import ua.nure.arkpz.demo.chart.Chart;
+import ua.nure.arkpz.demo.chart.CustomerChart;
+import ua.nure.arkpz.demo.model.*;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class ChartService {
     private final HistoryService historyService;
+    private final CustomerService customerService;
+    private final WorkerService workerService;
+
+    @Value("${upper-temperature-bound}")
+    private Double UPPER_TEMPERATURE_BOUND;
 
     @Autowired
-    public ChartService(HistoryService historyService) {
+    public ChartService(HistoryService historyService, CustomerService customerService, WorkerService workerService) {
         this.historyService = historyService;
+        this.customerService = customerService;
+        this.workerService = workerService;
     }
 
 
@@ -45,5 +54,28 @@ public class ChartService {
             chart.addPointToChart(chartPoint);
         }
         return chart;
+    }
+
+    public Chart createNewCustomerChartPeriod(Building building, Date from, Date to) {
+        List<Customer> customers = customerService.findCustomerByBuildingAndPeriod(building, from, to);
+        List<Customer> sickingCustomers = new ArrayList<>();
+        for(Customer customer : customers) {
+            if (customer.getTemperature() > UPPER_TEMPERATURE_BOUND) {
+                sickingCustomers.add(customer);
+            }
+        }
+
+        return null;
+    }
+
+    public CustomerChart createNewChartForAllBuilding(Building building) {
+        List<Customer> customers = customerService.findCustomerByBuilding(building);
+        List<Customer> sickingCustomers = new ArrayList<>();
+        for(Customer customer : customers) {
+            if (customer.getTemperature() > UPPER_TEMPERATURE_BOUND) {
+                sickingCustomers.add(customer);
+            }
+        }
+        return new CustomerChart(customers, sickingCustomers);
     }
 }
