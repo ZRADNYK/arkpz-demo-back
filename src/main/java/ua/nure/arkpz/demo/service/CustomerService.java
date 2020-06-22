@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.nure.arkpz.demo.dao.BuildingDao;
 import ua.nure.arkpz.demo.dao.CustomerDao;
+import ua.nure.arkpz.demo.dto.CustomerDto;
 import ua.nure.arkpz.demo.model.Building;
 import ua.nure.arkpz.demo.model.Customer;
 import ua.nure.arkpz.demo.validator.OvalValidatorImpl;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,45 +31,29 @@ public class CustomerService {
         this.historyService = historyService;
     }
 
-    public Customer customerEnteredBuilding(Building building, Customer newCustomer) {
+    public Customer customerEnteredBuilding(Building building, CustomerDto newCustomer) {
         Customer customer = Customer.builder()
                 .customerId(null)
-                .entryTime(newCustomer.getEntryTime())
+                .entryTime(new Timestamp(System.currentTimeMillis()))
                 .outTime(null)
                 .temperature(newCustomer.getTemperature())
                 .isSicking(findIsCustomerSicking(newCustomer.getTemperature()))
                 .currentBuilding(building)
                 .build();
         validator.validate(customer);
-        customerDao.save(customer);
 
         building.addCustomer(customer);
-        buildingDao.save(building);
-
-        historyService.addNewHistory(building, building.getCustomers().size(),
-                building.getWorkers().size());
 
         return customer;
     }
 
-    public Customer customerLeftBuilding(Building building, Customer customer) {
+    public Customer customerLeftBuilding(Building building, CustomerDto customer) {
         ArrayList<Customer> potentialCustomers = customerDao.findByCurrentBuildingAndTemperatureBetween(
                 building , customer.getTemperature() - 0.2,
                 customer.getTemperature() + 3.0);
 
         Customer customerToLeave = findClosestTemperature(customer.getTemperature(), potentialCustomers);
         customerToLeave.setOutTime(new Timestamp(System.currentTimeMillis()));
-
-        building.deleteCustomer(customer);
-        buildingDao.save(building);
-
-        customerDao.delete(customerToLeave);
-
-        building.deleteCustomer(customer);
-        buildingDao.save(building);
-
-        historyService.addNewHistory(building, building.getCustomers().size(),
-                building.getWorkers().size());
 
         return customerToLeave;
     }

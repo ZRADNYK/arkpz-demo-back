@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class RecommendationsService {
@@ -41,7 +42,7 @@ public class RecommendationsService {
     }
 
     public Recommendation prepareRecommendationsForBuilding(Building building) {
-        int daysBefore = 3;
+        int daysBefore = 7;
         long millis = System.currentTimeMillis();
         Date now = new Date(millis);
         Date from = subtractDays(now, daysBefore);
@@ -51,11 +52,10 @@ public class RecommendationsService {
                         building, UPPER_TEMPERATURE_BOUND, new Timestamp(from.getTime()), new Timestamp(now.getTime()));
         ArrayList<Worker> sickingWorkers =
                 workerDao.findByCurrentBuildingAndTemperatureIsGreaterThanEqual(building, UPPER_TEMPERATURE_BOUND);
-        ArrayList<Recommendation> recommendations = new ArrayList<>();
 
         double density = calculateDensityOfSickingCustomers(building, sickingCustomers);
-
-        return recommendationsDao.findByMinimalDensityGreaterThanEqual(density);
+        List<Recommendation> recommendations =  recommendationsDao.findByMinimalDensityGreaterThanEqual(density);;
+        return recommendations.get(0);
 
     }
 

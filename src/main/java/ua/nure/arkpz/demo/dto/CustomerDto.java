@@ -1,13 +1,11 @@
 package ua.nure.arkpz.demo.dto;
 
-import ua.nure.arkpz.demo.model.Building;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.sql.Time;
-
+@Getter
+@Setter
 public class CustomerDto {
     private Double temperature;
-    private Boolean isSicking;
-    private Time entryTime;
-    private Time outTime;
-    public Building currentBuilding;
+    public Long buildingId;
 }

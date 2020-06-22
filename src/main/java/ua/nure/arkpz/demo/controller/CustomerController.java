@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ua.nure.arkpz.demo.dto.CustomerDto;
 import ua.nure.arkpz.demo.model.Building;
 import ua.nure.arkpz.demo.model.Customer;
 import ua.nure.arkpz.demo.service.BuildingService;
@@ -24,15 +25,15 @@ public class CustomerController {
     }
 
     @PostMapping("/customers/enter")
-    public ResponseEntity<Customer> newCustomerEntered(@RequestBody Customer customer) {
-        Building building = buildingService.findById(customer.getCurrentBuilding().getBuildingId());
+    public ResponseEntity<Customer> newCustomerEntered(@RequestBody CustomerDto customer) {
+        Building building = buildingService.findById(customer.getBuildingId());
         customerService.customerEnteredBuilding(building, customer);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/customers/left")
-    public ResponseEntity<Customer> customerLeftBuilding(@RequestBody Customer customer) {
-        Building building = buildingService.findById(customer.getCurrentBuilding().getBuildingId());
+    public ResponseEntity<Customer> customerLeftBuilding(@RequestBody CustomerDto customer) {
+        Building building = buildingService.findById(customer.getBuildingId());
         customerService.customerLeftBuilding(building, customer);
         return new ResponseEntity<>(HttpStatus.OK);
     }
