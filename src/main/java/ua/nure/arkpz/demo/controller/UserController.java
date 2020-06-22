@@ -7,8 +7,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ua.nure.arkpz.demo.dto.UserDto;
 import ua.nure.arkpz.demo.model.User;
+import ua.nure.arkpz.demo.role.Role;
 import ua.nure.arkpz.demo.service.AuthenticationService;
 import ua.nure.arkpz.demo.service.UserService;
+
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -55,6 +58,14 @@ public class UserController {
         return new ResponseEntity<>(existingUser, HttpStatus.OK);
     }
 
-
+    @GetMapping("api/users/all")
+    public ResponseEntity<List<User>> getAllUsers(@RequestParam Long userId,
+                                                  @AuthenticationPrincipal User user) {
+        User existingUser = userService.findByUserId(userId);
+        if (!existingUser.equals(user) || !existingUser.getRoles().contains(Role.SUPERADMIN)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        else return ResponseEntity.ok(userService.findAll());
+    }
 
 }

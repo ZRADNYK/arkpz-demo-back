@@ -2,6 +2,7 @@ package ua.nure.arkpz.demo.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +12,7 @@ import ua.nure.arkpz.demo.dto.UserDto;
 import ua.nure.arkpz.demo.model.User;
 import ua.nure.arkpz.demo.role.Role;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -72,4 +74,7 @@ public class UserService implements UserDetailsService {
     }
 
 
+    public List<User> findAll() {
+        return userDao.findAll();
+    }
 }
