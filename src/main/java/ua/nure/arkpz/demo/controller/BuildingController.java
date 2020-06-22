@@ -12,7 +12,7 @@ import ua.nure.arkpz.demo.service.UserService;
 
 import java.util.Set;
 
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*",)
 @RestController
 public class BuildingController {
     private final BuildingService buildingService;
@@ -37,9 +37,10 @@ public class BuildingController {
     }
 
    // @Secured({"ROLE_ADMIN", "ROLE_SUPERADMIN"})
-    @PatchMapping("/buildings/update")
-    public ResponseEntity<Building> updateBuilding(@RequestBody BuildingDto buildingDto) {
-        final Building existingBuilding = buildingService.searchExistingBuilding(buildingDto);
+    @PostMapping("api/buildings/{buildingId}")
+    public ResponseEntity<Building> updateBuilding(@RequestBody BuildingDto buildingDto, @PathVariable Long buildingId) {
+        // final Building existingBuilding = buildingService.searchExistingBuilding(buildingDto);
+        Building existingBuilding = buildingService.findById(buildingId);
         if(existingBuilding == null ) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -49,7 +50,7 @@ public class BuildingController {
     }
 
  //   @Secured({"ROLE_ADMIN", "ROLE_SUPERADMIN"})
-    @PatchMapping("/buildings/delete")
+    @DeleteMapping("/buildings/delete")
     public ResponseEntity<Building> deleteBuilding(@RequestBody BuildingDto buildingDto) {
         final Building existingBuilding = buildingService.searchExistingBuilding(buildingDto);
         if(existingBuilding == null ) {

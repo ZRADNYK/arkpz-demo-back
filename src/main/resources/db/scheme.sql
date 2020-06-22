@@ -162,43 +162,43 @@ values (8, 'USER');
 insert into user_role (user_id, roles)
 values (9, 'USER');
 
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
                       building_id)
 values ('pr. Nauky, 70', 40, 2, 10, 'AromaKava', 3, 4, 3);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
                       building_id)
 values ('pr. Peremohy, 20', 10, 1, 1, 'AromaKava', 3, 1, 4);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
                       building_id)
 values ('str. Romena Rollana, 16', 40, 2, 10, 'AromaKava', 3, 2, 5);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
                       building_id)
 values ('str. Poltavskii Shliah, 140', 70, 3, 15, 'AromaKava', 3, 4, 6);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
                       building_id)
 values ('nab. Kharkivska, 7/9', 140, 3, 14, 'Antikafe 7/9', 4, 4, 7);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
                       building_id)
 values ('str. Beketova, 17', 35, 2, 10, 'Oblomov', 4, 3, 8);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
                       building_id)
 values ('str. Poltavskii Shliah, 155', 45, 2, 12, 'McDonalds', 4, 6, 9);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
                       building_id)
 values ('str. Nauky, 41', 45, 2, 12, 'McDonalds', 5, 6, 10);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
                       building_id)
 values ('str. Beketova, 117', 45, 2, 12, 'McDonalds', 5, 6, 11);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
                       building_id)
 values ('str. Romena Rollana, 16', 45, 2, 12, 'McDonalds', 5, 6, 12);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
                       building_id)
 values ('sq. Povstannia, 16', 45, 2, 12, 'Kulynychy', 6, 6, 13);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
                       building_id)
 values ('sq. Zakhysnykiv Ukrayiny, 18', 45, 2, 12, 'Kulynychy', 6, 6, 14);
-insert into building (address, area, enters_amount, max_customers_allowed, name, user_id, workers_amount,
+insert into building (address, area, enters_amount, max_customers_allowed, name, user_user_id, workers_amount,
                       building_id)
 values ('pr. Metrobudyvnykicv, 198', 45, 2, 12, 'Kulynychy', 6, 6, 15);
 
